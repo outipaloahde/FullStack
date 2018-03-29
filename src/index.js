@@ -59,7 +59,7 @@ const App = () => {
     <div>
       <Otsikko kurssi={kurssi}/>
       <p>Osat: </p>
-      <Sisalto osa1={osa1.nimi} tehtavia1={osa1.tehtavia} osa2={osa2.nimi} tehtavia2={osa2.nimi} osa3={osa3.nimi} tehtavia3={osa3.tehtavia}/>
+      <Sisalto osa1={osa1.nimi} tehtavia1={osa1.tehtavia} osa2={osa2.nimi} tehtavia2={osa2.tehtavia} osa3={osa3.nimi} tehtavia3={osa3.tehtavia}/>
       <p>Tehtäviä yhteensä {osa1.tehtavia + osa2.tehtavia + osa3.tehtavia} kpl</p>  
     </div>
   )
