@@ -3,15 +3,17 @@ import ReactDOM from 'react-dom';
 
 
 const Stats = (props) =>{
-    const hyvaKpl = this.state.hyva 
-    const neutKpl = this.state.neutraali 
-    const huonoKpl = this.state.huono
+    const hyvaKpl = props.hyva 
+    const neutKpl = props.neutraali 
+    const huonoKpl = props.huono
+    const yht = hyvaKpl + neutKpl + huonoKpl
     
-    const keskiarvo = () => {
-        let ka = ((hyvaKpl *1)+(huonoKpl * (-1))+(neutKpl*0)) / (hyvaKpl+huonoKpl+neutKpl)
-            
-
-    }
+    const ka = hyvaKpl 
+        return (
+            <div>
+                <p>ka={ka}</p>
+            </div>
+        )
 }
 
 class App extends React.Component{
@@ -25,6 +27,8 @@ class App extends React.Component{
             yht:0,
         }
     }
+
+
 
     klikHyva = () => {
         this.setState({
@@ -48,7 +52,25 @@ class App extends React.Component{
         })
     }
 
+    countStats = () => {
+        let hyva = this.state.hyva
+        let huono = this.state.huono
+        let neutraali = this.state.neutraali
+        let yht = this.state.yht
+        let ka = ((hyva * 1)+(huono*(-1))) / yht
+        return ka
+    }
+    countPercent = () => {
+        let hyva = this.state.hyva
+        let yht = this.state.yht
+        let perc = hyva / yht * 100
+        return perc
+    }
+
     render() {
+        let keskiarvo = this.countStats();
+        let percentage = this.countPercent();
+        
         return (
             <div>
                 <h2>Anna Palautetta</h2>
@@ -59,10 +81,9 @@ class App extends React.Component{
                 <p>Hyvä {this.state.hyva} kpl<br />
                 Neutraali {this.state.neutraali} kpl<br />
                 Huono {this.state.huono} kpl</p>
+                <p>Palautteita yhteensä {this.state.yht}</p>
+                <p>Keskiarvo {parseFloat(keskiarvo).toFixed(1)} Positiivista {parseFloat(percentage).toFixed(1)}%</p>
 
-                <p> {this.state.yht}</p>
-                <p> ka {this.state.ka} </p>
-                
             </div>
         )
     }
