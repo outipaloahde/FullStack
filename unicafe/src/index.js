@@ -38,12 +38,8 @@ const Statistic = props => (
       <td>Yhteensä</td>
       <td>{props.arvostelut[3]}</td>
     </tr>
-    <tr>
-      <Average arvostelut={props.arvostelut} />
-    </tr>
-    <tr>
-      <Percent arvostelut={props.arvostelut} />
-    </tr>
+    <Average arvostelut={props.arvostelut} />
+    <Percent arvostelut={props.arvostelut} />
   </tbody>
 );
 
@@ -53,11 +49,10 @@ const Average = props => {
   let yht = props.arvostelut[3];
   let ka = (hyva * 1 + huono * -1) / yht;
   return (
-    <div>
+    <tr>
       <td>Keskiarvo</td>
-      <td />
       <td>{parseFloat(ka).toFixed(1)}</td>
-    </div>
+    </tr>
   );
 };
 const Percent = props => {
@@ -65,11 +60,11 @@ const Percent = props => {
   let yht = props.arvostelut[3];
   let perc = (hyva / yht) * 100;
   return (
-    <div>
+    <tr>
       <td>Positiivista</td>
       <td />
       <td>{parseFloat(perc).toFixed(1)}%</td>
-    </div>
+    </tr>
   );
 };
 
