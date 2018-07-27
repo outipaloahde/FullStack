@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 const Button = props => {
   return (
     <div>
-      <button onClick={props.funktio}>{props.text}</button>
+      <button onClick={props.func}>{props.text}</button>
     </div>
   );
 };
@@ -23,22 +23,25 @@ const Statistics = props => {
 const Statistic = props => (
   <tbody>
     <tr>
-      <td>hyvä</td>
-      <td />
+      <td>Hyvä</td>
       <td>{props.arvostelut[0]}</td>
     </tr>
     <tr>
-      <td>neutraali</td>
-      <td />
+      <td>Neutraali</td>
       <td>{props.arvostelut[1]}</td>
     </tr>
     <tr>
-      <td>huono</td>
-      <td />
+      <td>Huono</td>
       <td>{props.arvostelut[2]}</td>
     </tr>
     <tr>
+      <td>Yhteensä</td>
+      <td>{props.arvostelut[3]}</td>
+    </tr>
+    <tr>
       <Average arvostelut={props.arvostelut} />
+    </tr>
+    <tr>
       <Percent arvostelut={props.arvostelut} />
     </tr>
   </tbody>
@@ -51,7 +54,9 @@ const Average = props => {
   let ka = (hyva * 1 + huono * -1) / yht;
   return (
     <div>
-      <p>Keskiarvo {parseFloat(ka).toFixed(1)}</p>
+      <td>Keskiarvo</td>
+      <td />
+      <td>{parseFloat(ka).toFixed(1)}</td>
     </div>
   );
 };
@@ -61,7 +66,9 @@ const Percent = props => {
   let perc = (hyva / yht) * 100;
   return (
     <div>
-      <p>Positiivista {parseFloat(perc).toFixed(0)}%</p>
+      <td>Positiivista</td>
+      <td />
+      <td>{parseFloat(perc).toFixed(1)}%</td>
     </div>
   );
 };
@@ -76,24 +83,16 @@ class App extends React.Component {
       yht: 0
     };
   }
-
-  klikHyva = () => {
-    this.setState({
-      hyva: this.state.hyva + 1,
-      yht: this.state.yht + 1
-    });
-  };
-  klikNeutraali = () => {
-    this.setState({
-      neutraali: this.state.neutraali + 1,
-      yht: this.state.yht + 1
-    });
-  };
-  klikHuono = () => {
-    this.setState({
-      huono: this.state.huono + 1,
-      yht: this.state.yht + 1
-    });
+  lisaaArvostelu = arvo => {
+    return () => {
+      if (arvo.name === "hyvä") {
+        this.setState({ hyva: arvo.value, yht: arvo.yht });
+      } else if (arvo.name === "neutraali") {
+        this.setState({ neutraali: arvo.value, yht: arvo.yht });
+      } else if (arvo.name === "huono") {
+        this.setState({ huono: arvo.value, yht: arvo.yht });
+      }
+    };
   };
   render() {
     if (
@@ -104,9 +103,30 @@ class App extends React.Component {
       return (
         <div>
           <h2>Anna Palautetta</h2>
-          <Button text="hyvä" funktio={this.klikHyva} />
-          <Button text="neutraali" funktio={this.klikNeutraali} />
-          <Button text="huono" funktio={this.klikHuono} />
+          <Button
+            text="hyvä"
+            func={this.lisaaArvostelu({
+              name: "hyvä",
+              value: this.state.hyva + 1,
+              yht: this.state.yht + 1
+            })}
+          />
+          <Button
+            text="neutraali"
+            func={this.lisaaArvostelu({
+              name: "neutraali",
+              value: this.state.neutraali + 1,
+              yht: this.state.yht + 1
+            })}
+          />
+          <Button
+            text="huono"
+            func={this.lisaaArvostelu({
+              name: "huono",
+              value: this.state.huono + 1,
+              yht: this.state.yht + 1
+            })}
+          />
           <p>Palautetta ei ole vielä annettu</p>
         </div>
       );
@@ -114,9 +134,30 @@ class App extends React.Component {
       return (
         <div>
           <h2>Anna Palautetta</h2>
-          <Button text="hyvä" funktio={this.klikHyva} />
-          <Button text="neutraali" funktio={this.klikNeutraali} />
-          <Button text="huono" funktio={this.klikHuono} />
+          <Button
+            text="hyvä"
+            func={this.lisaaArvostelu({
+              name: "hyvä",
+              value: this.state.hyva + 1,
+              yht: this.state.yht + 1
+            })}
+          />
+          <Button
+            text="neutraali"
+            func={this.lisaaArvostelu({
+              name: "neutraali",
+              value: this.state.neutraali + 1,
+              yht: this.state.yht + 1
+            })}
+          />
+          <Button
+            text="huono"
+            func={this.lisaaArvostelu({
+              name: "huono",
+              value: this.state.huono + 1,
+              yht: this.state.yht + 1
+            })}
+          />
           <Statistics
             arvostelut={[
               this.state.hyva,
