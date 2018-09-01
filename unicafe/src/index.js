@@ -62,7 +62,6 @@ const Percent = props => {
   return (
     <tr>
       <td>Positiivista</td>
-      <td />
       <td>{parseFloat(perc).toFixed(1)}%</td>
     </tr>
   );
