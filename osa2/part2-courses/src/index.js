@@ -19,13 +19,10 @@ const Otsikko = (props) => <h1>{props.otsikko}</h1>
 const Sisalto = (props) => {
     const osat = props.osat
 
-    console.log(osat, 'numero')
-    let yht = 0;
-    for (let i = 0; i < osat.length; i++) {
-      console.log(i)
-      yht += props.osat[i].tehtavia
-      console.log(yht)
-    }
+    let yht = osat.reduce(function(sum, osa) {
+      console.log('yhteensä ', sum, osa)
+      return sum + osa.tehtavia
+    }, 0)
     return (
         <div>
             <ul>
