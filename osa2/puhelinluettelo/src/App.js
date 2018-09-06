@@ -5,7 +5,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' }
+        { name: 'Arto Hellas' },
       ],
       newName: 'Lisää nimi..'
     }
@@ -18,13 +18,16 @@ class App extends React.Component {
 
   addName = (event) => {
     event.preventDefault()
-    console.log('nappia painettu')
-    const person = { name: this.state.newName}
-    const persons = this.state.persons.concat(person)
-    this.setState({
-      persons: persons,
-      newName: ''
-    })
+    const newPerson = { name: this.state.newName}
+    const double = this.state.persons.find(person => person.name === newPerson.name)
+    const persons = this.state.persons.includes(double) ?
+      this.state.persons : 
+      this.state.persons.concat(newPerson)
+
+      this.setState({
+        persons
+      })
+
   }
 
   render() {
