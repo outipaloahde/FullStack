@@ -10,50 +10,81 @@ class App extends React.Component {
           num: '2340'
         },
         {
+          name: 'Mauno',
+          num: '2340'
+        },
+        {
+          name: 'Mikko',
+          num: '2340'
+        },
+        {
           name: 'Matti',
+          num: '2340'
+        },
+        {
+          name: 'Arto',
           num: '1244444'
         },
       ],
       newName: 'newName',
-      newNum: 'newNum'
+      newNum: 'newNum',
+      filter: ''
+      
     };
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleNumChange = this.handleNumChange.bind(this);
+   
+  }
+  handleFilterChange = (event) => {
+    this.setState({
+      filter: event.target.value
+    }); 
+    console.log(this.state.filter)
   }
 
   handleNameChange = (event) => {
     this.setState({
       newName: event.target.value
-    }); console.log(this.state.newNum, 'newNum', this.state.newName, 'name')
+    }); 
   }
 
   handleNumChange = (event) => {
     this.setState({
       newNum: event.target.value
-    }); console.log(this.state.newNum, 'newNum', this.state.newName, 'name')
+    }); 
   }
 
   addPerson = (event) => {
     event.preventDefault()
     const newPerson = { name: this.state.newName, num: this.state.newNum}
-    console.log(newPerson, 'newPerson')
     const double = this.state.persons.find(person => person.name === newPerson.name)
     const persons = this.state.persons.includes(double) ?
       this.state.persons : 
       this.state.persons.concat(newPerson)
-
       this.setState({
         persons
       })
   }
 
+  showNames = (event) => {
+    event.preventDefault()
+
+  }
+
   render() {
-    const nameList = this.state.persons.map(person => <li key={person.name}>{person.name},     {person.num}</li>)
+    let filteredList = this.state.persons.filter(
+      (person) => {
+        return person.name.indexOf(this.state.filter) !== -1;
+      }
+    )
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <div>
+          Rajaa näytettäviä: <input type='text' onChange={this.handleFilterChange}/>
+        </div>
+        
         <form onSubmit={this.addPerson}>
           <div>
+            <h3>Lisää uusi henkilö</h3>
             nimi: <input onChange={this.handleNameChange}/>
           </div>
           <div>
@@ -64,7 +95,7 @@ class App extends React.Component {
           </div>
         </form>
         <h2>Numerot</h2>
-        {nameList}
+        {filteredList.map(person => <li key={person.name}>{person.name}, {person.num}</li>)}
       </div>
     )
   }
