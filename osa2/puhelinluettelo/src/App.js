@@ -31,25 +31,11 @@ class App extends React.Component {
       filter: ''
       
     };
+    this.handleChange = this.handleChange.bind(this);
    
   }
-  handleFilterChange = (event) => {
-    this.setState({
-      filter: event.target.value
-    }); 
-    console.log(this.state.filter)
-  }
-
-  handleNameChange = (event) => {
-    this.setState({
-      newName: event.target.value
-    }); 
-  }
-
-  handleNumChange = (event) => {
-    this.setState({
-      newNum: event.target.value
-    }); 
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value});
   }
 
   addPerson = (event) => {
@@ -64,11 +50,6 @@ class App extends React.Component {
       })
   }
 
-  showNames = (event) => {
-    event.preventDefault()
-
-  }
-
   render() {
     let filteredList = this.state.persons.filter(
       (person) => {
@@ -79,16 +60,16 @@ class App extends React.Component {
       <div>
         <h2>Puhelinluettelo</h2>
         <div>
-          Rajaa näytettäviä: <input type='text' onChange={this.handleFilterChange}/>
+          Rajaa näytettäviä: <input type='text' onChange={this.handleChange} name='filter'/>
         </div>
         
         <form onSubmit={this.addPerson}>
           <div>
             <h3>Lisää uusi henkilö</h3>
-            nimi: <input onChange={this.handleNameChange}/>
+            nimi: <input onChange={this.handleChange} name='newName'/>
           </div>
           <div>
-            numero: <input onChange={this.handleNumChange}/>
+            numero: <input onChange={this.handleChange} name='newNum'/>
           </div>
           <div>
             <button type="submit">lisää</button>
