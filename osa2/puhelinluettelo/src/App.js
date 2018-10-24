@@ -1,4 +1,6 @@
 import React from 'react';
+import AddPerson from './components/AddPerson';
+import FilterNames from './components/FilterNames';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +33,7 @@ class App extends React.Component {
       filter: ''
       
     };
-    this.handleChange = this.handleChange.bind(this);
+
    
   }
   handleChange = (event) => {
@@ -59,22 +61,11 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <div>
-          Rajaa näytettäviä: <input type='text' onChange={this.handleChange} name='filter'/>
+        <div onChange={this.handleChange}>
+          <FilterNames filter={this.state.filter}/>
+          <AddPerson newName={this.state.newName} newNum={this.state.newNum} addPerson={this.addPerson}/> 
         </div>
-        
-        <form onSubmit={this.addPerson}>
-          <div>
-            <h3>Lisää uusi henkilö</h3>
-            nimi: <input onChange={this.handleChange} name='newName'/>
-          </div>
-          <div>
-            numero: <input onChange={this.handleChange} name='newNum'/>
-          </div>
-          <div>
-            <button type="submit">lisää</button>
-          </div>
-        </form>
+              
         <h2>Numerot</h2>
         {filteredList.map(person => <li key={person.name}>{person.name}, {person.num}</li>)}
       </div>
