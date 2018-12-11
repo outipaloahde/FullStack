@@ -1,41 +1,30 @@
 import React from 'react';
 import AddPerson from './components/AddPerson';
 import FilterNames from './components/FilterNames';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      persons: [
-        {
-          name: 'Arto Hellas',
-          num: '2340'
-        },
-        {
-          name: 'Mauno',
-          num: '2340'
-        },
-        {
-          name: 'Mikko',
-          num: '2340'
-        },
-        {
-          name: 'Matti',
-          num: '2340'
-        },
-        {
-          name: 'Arto',
-          num: '1244444'
-        },
-      ],
+      persons: [],
       newName: 'newName',
       newNum: 'newNum',
       filter: ''
       
     };
-
    
   }
+  componentDidMount(){
+    console.log('did mount')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log(response)
+        this.setState({ persons: response.data })
+      })
+  }
+
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value});
   }
@@ -67,7 +56,7 @@ class App extends React.Component {
         </div>
               
         <h2>Numerot</h2>
-        {filteredList.map(person => <li key={person.name}>{person.name}, {person.num}</li>)}
+        {filteredList.map(person => <li key={person.name}>{person.name}, {person.number}</li>)}
       </div>
     )
   }
